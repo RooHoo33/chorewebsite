@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <title>Spring with Spring Boot, Spring MVC, and Kotlin</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+</head>
+<body>
+
+<h2>Preference </h2>
+
+<div>
+
+    <form th:object="${preferenceForm}" th:action="@{/pref}" method="post">
+        <table>
+            <tr>
+                <th></th>
+                <th>Monday</th>
+                <th>Tuesday</th>
+<!--                <th>Wednesday</th>-->
+                <!--            <th>Thursday</th>-->
+                <!--            <th>Friday</th>-->
+            </tr>
+            <tr>
+                <th>Sweep and Mop</th>
+                <td></td>
+                <td>
+                    <select th:field="*{mondaySweep}">
+                        <option th:each="i : ${#numbers.sequence(0, 4)}" th:value="${i}" th:text="${i}">
+                        </option>
+                    </select>
+                </td>
+                <td>
+                    <select th:field="*{tuesdaySweep}">
+                        <option th:each="i : ${#numbers.sequence(0, 4)}" th:value="${i}" th:text="${i}">
+                        </option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th>Dishes</th>
+                <td></td>
+                <td>
+                    <select th:field="*{mondayDishes}">
+                        <option th:each="i : ${#numbers.sequence(0, 4)}" th:value="${i}" th:text="${i}">
+                        </option>
+                    </select>
+                </td>
+                <td>
+                    <select th:field="*{tuesdayDishes}">
+                        <option th:each="i : ${#numbers.sequence(0, 4)}" th:value="${i}" th:text="${i}">
+                        </option>
+                    </select>
+                </td>
+            </tr>
+<!--            Chore:<input type="text" th:field="*{chore}"/><br/>-->
+<!--            Day Of Week:<input type="text" th:field="*{dayOfWeek}"/><br/>-->
+
+        </table>
+        UserId:<input type="number" th:field="*{user_id}"/><br/>
+
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+</body>
+</html>
