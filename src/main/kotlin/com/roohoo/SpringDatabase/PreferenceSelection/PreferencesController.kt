@@ -1,5 +1,6 @@
 package com.roohoo.SpringDatabase.PreferenceSelection
 
+import com.roohoo.SpringDatabase.UserRepository
 import org.slf4j.Logger
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -8,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping
 
 
 @Controller
-class PreferencesController(private val preferenceRepository: PreferenceRepository, val logger:Logger) {
+class PreferencesController(private val preferenceRepository: PreferenceRepository, private val userRepository: UserRepository, val logger:Logger) {
 
 //    @Autowired
 //    private val logger: Logger? = null
@@ -20,14 +21,14 @@ class PreferencesController(private val preferenceRepository: PreferenceReposito
         logger.warn("hello")
 //        logger.warn(createPreferenceForm.dayOfWeek!!)
 
-//        logger.warn(createPreferenceForm.chore!!)
+//        logger.warn(createPreferenceForm.chores!!)
 
         logger.warn("hello")
 
         logger.warn((createPreferenceForm.user_id!!.toInt() is Int).toString())
         logger.warn("goodbye")
 //        val userId = createPreferenceForm.user_id!!.toInt()
-//        val preference = Preference(user_id = userId, day_of_week = createPreferenceForm.dayOfWeek!!, chore = createPreferenceForm.chore!!)
+//        val preference = Preference(user_id = userId, day_of_week = createPreferenceForm.dayOfWeek!!, chores = createPreferenceForm.chores!!)
 
 
 //        preferenceRepository.save(preference)
@@ -49,6 +50,12 @@ class PreferencesController(private val preferenceRepository: PreferenceReposito
         model.addAttribute("prefs", prefs)
 
         return "preferences/index"
+    }
+    @GetMapping("/chorechart")
+    fun getChoreChart(model:Model){
+        var test = ChoreService(preferenceRepository, userRepository, logger)
+        test.getAllUsersAndTheirPreferences()
+//        return "index"
     }
 
 }

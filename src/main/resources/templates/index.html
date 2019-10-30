@@ -6,21 +6,21 @@
 </head>
 <body>
 <table>
-<thead>
-<tr>
-    <th> User Id </th>
-    <th> User Name </th>
-</tr>
-</thead>
-<tbody>
-<tr th:if="${users.empty}">
-    <td colspan="2"> No Books Available </td>
-</tr>
-<tr th:each="user : ${users}">
-    <td><span th:text="${user.user_id}"></span></td>
-    <td><span th:text="${user.userName}"></span></td>
-</tr>
-</tbody>
+    <thead>
+    <tr>
+        <th> User Id </th>
+        <th> User Name </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${users.empty}">
+        <td colspan="2"> No Books Available </td>
+    </tr>
+    <tr th:each="siteUser : ${users}">
+        <td><span th:text="${siteUser.user_id}"></span></td>
+        <td><span th:text="${siteUser.userName}"></span></td>
+    </tr>
+    </tbody>
 </table>
 </body>
 </html>

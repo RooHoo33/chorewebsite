@@ -7,7 +7,7 @@ import javax.persistence.Id
 import javax.validation.constraints.NotBlank
 
 @Entity(name = "user_and_id")
-data class User(
+data class SiteUser(
         @Id @GeneratedValue(strategy = GenerationType.AUTO)
         val user_id: Int = 0,
 

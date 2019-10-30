@@ -22,17 +22,18 @@ data class Preference(
         val week_number: Int = 0,
 
         @get: NotBlank
-        val chores_list: String = ""){
-        var choresList:List<String>? = null
-        var chores:ArrayList<Chore>?=null
-        init {
-            choresList = chores_list.split(",")
-                chores?.add(Chore(chore = "sweepAndMop", day = "Monday", priority = Integer.parseInt(choresList!![0])))
-                chores?.add(Chore(chore = "dishes", day = "Monday", priority = Integer.parseInt(choresList!![1])))
-                chores?.add(Chore(chore = "sweepAndMop", day = "Tuesday", priority = Integer.parseInt(choresList!![2])))
-                chores?.add(Chore(chore = "dishes", day = "Tuesday", priority = Integer.parseInt(choresList!![3])))
+        val chores_list: String = "") {
 
+    fun getChores(): MutableList<Chore> {
+        val chores = mutableListOf<Chore>()
 
-        }
+        val choresFromSlip = chores_list.split(",")
+
+        chores.add(Chore(choreString = "sweepAndMop", day = "Monday", priority = Integer.parseInt(choresFromSlip[0])))
+        chores.add(Chore(choreString = "dishes", day = "Monday", priority = Integer.parseInt(choresFromSlip[1])))
+        chores.add(Chore(choreString = "sweepAndMop", day = "Tuesday", priority = Integer.parseInt(choresFromSlip[2])))
+        chores.add(Chore(choreString = "dishes", day = "Tuesday", priority = Integer.parseInt(choresFromSlip[3])))
+        return chores
+    }
+
 }
-
