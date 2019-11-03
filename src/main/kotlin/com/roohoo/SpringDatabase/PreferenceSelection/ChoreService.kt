@@ -6,9 +6,9 @@ import org.slf4j.Logger
 class ChoreService(private val preferenceRepository: PreferenceRepository, private val userRepository: UserRepository, val logger: Logger) {
 
 
-    private fun createChoreChart(userAndChoresList: MutableList<UserAndChores>) {
+    private fun createChoreChart(userAndChoresList: MutableList<UserAndChores>): MutableMap<String, MutableMap<String, Int>> {
 
-        val choreList = assembleChoreChartMap()
+        val choreList = assembleEachDaysChoresMap()
         var stillPicking = true
         while (stillPicking) {
             userAndChoresList.forEach {
@@ -17,8 +17,8 @@ class ChoreService(private val preferenceRepository: PreferenceRepository, priva
                     chores.priority
                 }
                 for (chore in it.chores) {
-                    if (choreList.getValue(chore.day)[chore.choreString] == 0) {
-                        choreList.getValue(chore.day)[chore.choreString] = it.siteUser.user_id
+                    if (choreList.getValue(chore.choreString)[chore.day] == 0) {
+                        choreList.getValue(chore.choreString)[chore.day] = it.siteUser.userId
                         stillPicking = true
                         break
                     }
@@ -26,34 +26,37 @@ class ChoreService(private val preferenceRepository: PreferenceRepository, priva
                 }
             }
         }
+        logger.debug("Monday: " + choreList.getValue("sweepAndMop")["Monday"] + " " + choreList.getValue("dishes")["Monday"])
+        logger.debug("Monday: " + choreList.getValue("sweepAndMop")["Tuesday"] + " " + choreList.getValue("dishes")["Tuesday"])
+        return choreList
 
-        logger.debug("Monday: " + choreList.getValue("Monday")["sweepAndMop"] + " " + choreList.getValue("Monday")["dishes"])
-        logger.debug("Tuesday: " + choreList.getValue("Tuesday")["sweepAndMop"] + " " + choreList.getValue("Tuesday")["dishes"])
     }
 
-    fun getAllUsersAndTheirPreferences() {
+    fun getAllUsersAndTheirPreferences(): MutableMap<String, MutableMap<String, Int>> {
         val users = userRepository.findAll()
         val usersAndPreferences = mutableListOf<UserAndChores>()
         users.forEach {
             val allPreferences = preferenceRepository.findAll()
             val onlyUserPreferences = allPreferences.filter { preferenceFromFilter ->
-                preferenceFromFilter.user_id == it.user_id
+                preferenceFromFilter.user_id == it.userId
             }
             if (onlyUserPreferences.size > 1) {
                 logger.error("There are more than 1 preferences, the size is: " + onlyUserPreferences.size)
+            } else if (onlyUserPreferences.isEmpty()) {
+                    logger.warn("User does not have any preferences: " + it.userId)
+
+                }else {
+
+                usersAndPreferences.add(UserAndChores(it, onlyUserPreferences[0].getChores()))
             }
-            if (onlyUserPreferences.isEmpty()) {
-                logger.warn("User does not have any preferences: " + it.user_id)
-            }
-            usersAndPreferences.add(UserAndChores(it,onlyUserPreferences[0].getChores()))
         }
-        createChoreChart(usersAndPreferences)
+        return createChoreChart(usersAndPreferences)
     }
 
 
-    private fun assembleChoreChartMap() = mapOf("Monday" to assembleEachDaysChoresMap(), "Tuesday" to assembleEachDaysChoresMap())
+    private fun assembleChoreChartMap() = mutableMapOf("Monday" to 0, "Tuesday" to 0)
 
 
-    private fun assembleEachDaysChoresMap() = mutableMapOf("sweepAndMop" to 0, "dishes" to 0)
+    private fun assembleEachDaysChoresMap() = mutableMapOf("sweepAndMop" to assembleChoreChartMap(), "dishes" to assembleChoreChartMap())
 }
 

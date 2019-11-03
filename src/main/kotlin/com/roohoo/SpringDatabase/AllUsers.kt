@@ -3,10 +3,6 @@ package com.roohoo.SpringDatabase
 import org.springframework.stereotype.Controller
 import org.springframework.ui.ModelMap
 import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.servlet.ModelAndView
-import java.util.stream.Collectors
-import java.util.stream.IntStream
 
 @Controller
 class AllUsers(private val userRepository: UserRepository) {
@@ -19,7 +15,7 @@ class AllUsers(private val userRepository: UserRepository) {
 
         model.addAttribute("users", users)
 
-        return "index"
+        return "site-uers/index"
     }
 }
 

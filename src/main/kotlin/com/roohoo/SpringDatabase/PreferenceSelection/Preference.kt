@@ -15,10 +15,10 @@ data class Preference(
         @get: NotNull
         val user_id: Int = 0,
 
-        @get: NotBlank
-        val year: Int = 0,
+        @get: NotNull
+        val chore_year: Int = 0,
 
-        @get: NotBlank
+        @get: NotNull
         val week_number: Int = 0,
 
         @get: NotBlank
@@ -35,5 +35,7 @@ data class Preference(
         chores.add(Chore(choreString = "dishes", day = "Tuesday", priority = Integer.parseInt(choresFromSlip[3])))
         return chores
     }
+
+
 
 }
