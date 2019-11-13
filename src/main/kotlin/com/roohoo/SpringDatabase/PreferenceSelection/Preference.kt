@@ -10,24 +10,24 @@ import javax.validation.constraints.NotNull
 @Entity(name = "preferences")
 data class Preference(
         @Id @GeneratedValue(strategy = GenerationType.AUTO)
-        val preference_id: Int = 0,
+        val preferenceId: Int = 0,
 
         @get: NotNull
-        val user_id: Int = 0,
+        val userId: Int = 0,
 
         @get: NotNull
-        val chore_year: Int = 0,
+        val choreYear: Int = 0,
 
         @get: NotNull
-        val week_number: Int = 0,
+        val weekNumber: Int = 0,
 
         @get: NotBlank
-        val chores_list: String = "") {
+        val choresList: String = "") {
 
     fun getChores(): MutableList<Chore> {
         val chores = mutableListOf<Chore>()
 
-        val choresFromSlip = chores_list.split(",")
+        val choresFromSlip = choresList.split(",")
 
         chores.add(Chore(choreString = "sweepAndMop", day = "Monday", priority = Integer.parseInt(choresFromSlip[0])))
         chores.add(Chore(choreString = "dishes", day = "Monday", priority = Integer.parseInt(choresFromSlip[1])))

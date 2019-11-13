@@ -1,86 +1,86 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 
 <head lang="en">
-    <title>Spring with Spring Boot, Spring MVC, and Kotlin</title>
-    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+    <!--    <link th:href="@{/static/css/layout_header.css}" rel="stylesheet" />-->
+    <!--    <title>Spring with Spring Boot, Spring MVC, and Kotlin</title>-->
+    <!--    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>-->
     <title>Page Title</title>
-    <style>
-        body {
-            background-color: #b3e0ff;
+    <!--        <style>-->
+    <!--            body {-->
+    <!--                /*background-color: #b3e0ff;*/-->
 
 
-            color: black;
-            font-family: Helvetica, Arial, sans-serif;
-        }
-        input[type=text], input[type=number], input[type=password] {
-            width:225px;
-            box-sizing: border-box;
-            border: 2px solid #e6f5ff;
-            border-radius: 4px;
-            font-size: 16px;
-            background-color: #e6f5ff;
-            background-position: 10px 10px;
-            background-repeat: no-repeat;
-            padding: 12px 20px 12px 12px;
-            -webkit-transition: width 0.4s ease-in-out;
-            transition: width 0.4s ease-in-out;
-        }
-        .note {
-            line-height: 0%;
-            /*content: 1px;*/
-            color: gray;
-            font-size: 15px;
-        }
+    <!--                color: black;-->
+    <!--                font-family: Helvetica, Arial, sans-serif;-->
+    <!--            }-->
 
-        input[type=text]:focus {
-            width: 300px;
+<!--                -->
 
-        }
+<!--                .note {-->
+<!--                    line-height: 0%;-->
+<!--                    /*content: 1px;*/-->
+<!--                    color: gray;-->
+<!--                    font-size: 15px;-->
+<!--                }-->
 
-        button {
-            background-color:#44c767;
-            border-radius:28px;
-            border:1px solid #18ab29;
-            display:inline-block;
-            cursor:pointer;
-            color:#ffffff;
-            font-size:17px;
-            padding:16px 31px;
-            text-decoration:none;
-            text-shadow:0px 1px 0px #2f6627;
-            margin: 30px;
-        }
-        button:hover {
-            background-color:#60d17c;
-        }
-        button:active {
-            position:relative;
-            top:1px;
-        }
+<!--                input[type=text]:focus {-->
+<!--                    width: 300px;-->
+
+<!--                }-->
+
+<!--                button {-->
+<!--                    background-color: #44c767;-->
+<!--                    border-radius: 28px;-->
+<!--                    border: 1px solid #18ab29;-->
+<!--                    display: inline-block;-->
+<!--                    cursor: pointer;-->
+<!--                    color: #ffffff;-->
+<!--                    font-size: 17px;-->
+<!--                    padding: 16px 31px;-->
+<!--                    text-decoration: none;-->
+<!--                    text-shadow: 0px 1px 0px #2f6627;-->
+<!--                    margin: 30px;-->
+<!--                }-->
+
+<!--                button:hover {-->
+<!--                    background-color: #60d17c;-->
+<!--                }-->
+
+<!--                button:active {-->
+<!--                    position: relative;-->
+<!--                    top: 1px;-->
+<!--                }-->
 
 
+    <!--        </style>-->
+    <link rel="stylesheet" th:href="@{css/layout_header.css}"/>
+    <link rel="stylesheet" th:href="@{css/form.css}"/>
 
-    </style>
 </head>
 <body>
 
-<h1>Login</h1>
- <form th:object="${siteUser}" th:action="@{/create-user}" method="post">
+<div th:replace="fragments/header :: header"></div>
+<div class="user-form">
+<form th:object="${siteUser}" th:action="@{/create-user}" method="post">
+    <h1 class="user-form">Login</h1>
+
     <h3>First Name</h3>
     <input type="text" th:field="*{first_name}"><br>
     <h3>Last Name</h3>
     <input type="text" th:field="*{last_name}"><br>
     <h3>Kappa Simga</h3>
-    <h4 class="note">Leave blank if Associate Member</h4>
+    <h4 class="note user-form">Leave zero if Associate Member</h4>
     <input type="number" th:field="*{kappa_sigma}"><br>
+    <h3>Big</h3>
+    <input type="number" th:field="*{big}"><br>
     <h3>User Name</h3>
     <input type="text" th:field="*{user_name}"><br>
     <h3>Password</h3>
     <input type="password" th:field="*{password}"><br>
     <button type="submit">Submit</button>
 </form>
-
+</div>
 </body>
 </html>

@@ -1,15 +1,18 @@
 package com.roohoo.SpringDatabase.PreferenceSelection
 
+import com.roohoo.SpringDatabase.Committee.CommitteeRepository
 import com.roohoo.SpringDatabase.UserRepository
 import org.slf4j.Logger
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.security.core.userdetails.UserDetails
 
 
 @Controller
-class PreferencesController(private val preferenceRepository: PreferenceRepository, private val userRepository: UserRepository, val logger:Logger) {
+class PreferencesController(private val preferenceRepository: PreferenceRepository, private val userRepository: UserRepository, val logger: Logger, private val committeeRepository: CommitteeRepository) {
 
 //    @Autowired
 //    private val logger: Logger? = null
@@ -18,18 +21,10 @@ class PreferencesController(private val preferenceRepository: PreferenceReposito
     @PostMapping("/pref")
     fun addStudent(createPreferenceForm: CreatePreferenceForm, model: Model): String {
 
-        logger.warn("hello")
-//        logger.warn(createPreferenceForm.dayOfWeek!!)
-
-//        logger.warn(createPreferenceForm.chores!!)
-
-        logger.warn("hello")
-
-        logger.warn((createPreferenceForm.user_id!!.toInt() is Int).toString())
-        logger.warn("goodbye")
         val userId = createPreferenceForm.user_id!!.toInt()
         logger.debug(createPreferenceForm.toString())
-        val preference = Preference(user_id = userId, chores_list = createPreferenceForm.setChoresList(), week_number = createPreferenceForm.weekNumber!!.toInt(), chore_year = createPreferenceForm.year!!.toInt())
+        logger.debug(createPreferenceForm.weekNumber)
+        val preference = Preference(userId = userId, choresList = createPreferenceForm.setChoresList(), weekNumber = createPreferenceForm.weekNumber!!.toInt(), choreYear = createPreferenceForm.year!!.toInt())
 
         logger.debug(createPreferenceForm.weekOverride.toString())
         preferenceRepository.save(preference)
@@ -44,7 +39,19 @@ class PreferencesController(private val preferenceRepository: PreferenceReposito
     }
 
     @GetMapping("/allprefs")
-    fun getAllPrefs(model:Model):String{
+    fun getAllPrefs(model: Model): String {
+        val principal = SecurityContextHolder.getContext().authentication.principal
+        var username:String? = null
+        if (principal is UserDetails) {
+            username = principal.username
+        } else {
+            username = principal.toString()
+        }
+
+        val userObject = userRepository.findByUserName(username!!)
+        logger.debug("this is the user: " + username)
+        logger.debug(userObject.toString())
+
         val prefs = preferenceRepository.findAll()
 
 
@@ -52,13 +59,21 @@ class PreferencesController(private val preferenceRepository: PreferenceReposito
 
         return "preferences/index"
     }
-    @GetMapping("/chorechart")
-    fun getChoreChart(model:Model):String{
-        var test = ChoreService(preferenceRepository, userRepository, logger)
-        val choreChartMap = test.getAllUsersAndTheirPreferences()
-        val choreChartList = choreChartMap.values
-        model.addAttribute("choreChartList", test.getAllUsersAndTheirPreferences())
+
+    @PostMapping("/chorechart")
+    fun createChoreChart(choreChartType: ChoreChartType, model: Model): String {
+        var test = ChoreService(preferenceRepository, userRepository, committeeRepository, logger)
+//        val choreChartList = choreChartMap.values
+        model.addAttribute("choreChartList", test.getAllUsersAndTheirPreferences(choreChartType.type))
         return "preferences/chorechart"
+    }
+
+    @GetMapping("/chorechart")
+    fun getChoreChart(model: Model): String {
+        var test = ChoreService(preferenceRepository, userRepository, committeeRepository, logger)
+//        val choreChartList = choreChartMap.values
+        model.addAttribute("choreChartType", ChoreChartType())
+        return "preferences/select-chore-chart-type"
     }
 
 }

@@ -6,6 +6,7 @@
     <title>Welcome Security with Spring Boot!</title>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" th:href="@{css/layout_header.css}" />
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
     <script
@@ -14,6 +15,8 @@
             src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body class="container" style="margin:50px">
+
+<div th:replace="fragments/header :: header"></div>
 <div class="row col-sm-6"
      style="border: 1px ridge #003312; padding:20px; float: none; margin: 0 auto;">
     <h5 class="text-center" style="font-size: 25px">Sign In</h5>
@@ -37,7 +40,7 @@
         <button type="submit" class="btn btn-primary btn-block">Submit</button>
     </form>
     <h1></h1>
-    <form th:action="@{/create-user}" method="get">
+    <form th:object="${preferenceForm}" th:action="@{/create-user}" method="get">
         <button type="submit" class="btn btn-primary btn-block">Create New Account</button>
     </form>
 

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<style>
+    select{
+        width: 225px;
+        box-sizing: border-box;
+        border: 2px solid #e6f5ff;
+        border-radius: 4px;
+        font-size: 16px;
+        background-color: #e6f5ff;
+        background-position: 10px 10px;
+        background-repeat: no-repeat;
+        padding: 12px 20px 12px 12px;
+        -webkit-transition: width 0.4s ease-in-out;
+        transition: width 0.4s ease-in-out;
+    }
+    select:focus {
+        width: 300px;
+
+    }
+</style>
+</head>
+<body>
+
+
+
+
+
+<form th:object="${choreChartType}" th:action="@{/chorechart}" method="post">
+    <label>
+        <select th:field="*{type}">
+            <option th:value="kappaSimga"> Kappa Sigma Order</option>
+            <option th:value="reverse"> Reverse Kappa Sigma Order</option>
+            <option th:value="random"> Random</option>
+        </select>
+    </label>
+    <button type="submit" class="btn btn-outline-primary">Submit</button>
+</form>
+<!--<form th:object="${choreChartType}" th:action="@{/chorechart}" method="post">-->
+
+<!--    <button type="submit" class="btn btn-outline-secondary" th:value="reverse">Reverse Kappa Sigma Order</button>-->
+<!--</form>-->
+<!--<form th:object="${choreChartType}" th:action="@{/chorechart}" method="post">-->
+<!--    <button type="submit" class="btn btn-outline-success" th:value="random">Random</button>-->
+<!--</form>-->
+
+
+</body>
+</html>

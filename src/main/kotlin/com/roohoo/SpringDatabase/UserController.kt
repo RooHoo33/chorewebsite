@@ -29,10 +29,10 @@ class UserController(private val userRepository: UserRepository) {
 
     @RequestMapping("/")
     fun home(model:Model): String{
-        val users = userRepository.findAll()
-
-        model.addAttribute("users", users)
-        return "site-users/index"
+//        val users = userRepository.findAll()
+//
+//        model.addAttribute("users", users)
+        return "main-page"
     }
 
     @RequestMapping("/403")
@@ -60,7 +60,7 @@ class UserController(private val userRepository: UserRepository) {
 
         logger.debug(siteUser.toString())
 
-        val siteUserHere = SiteUser(firstName = siteUser.first_name!!, brother = siteUser.brother, kappaSigma = siteUser.kappa_sigma!!, lastName = siteUser.last_name!!, password = hashedPassword, userName = siteUser.user_name!!)
+        val siteUserHere = SiteUser(firstName = siteUser.first_name!!, brother = siteUser.kappa_sigma != 0, kappaSigma = siteUser.kappa_sigma!!, lastName = siteUser.last_name!!, password = hashedPassword, userName = siteUser.user_name!!)
         userRepository.save(siteUserHere)
         val users = userRepository.findAll()
 

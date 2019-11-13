@@ -9,7 +9,7 @@
     <thead>
     <tr>
         <th> User Id </th>
-        <th> Preference_id </th>
+        <th> Preference Id </th>
         <th> Week Number</th>
         <th> Chores List </th>
     </tr>
@@ -19,10 +19,10 @@
         <td colspan="2"> No Books Available </td>
     </tr>
     <tr th:each="pref : ${prefs}">
-        <td><span th:text="${pref.user_id}"></span></td>
-        <td><span th:text="${pref.preference_id}"></span></td>
-        <td><span th:text="${pref.week_number}"></span></td>
-        <td><span th:text="${pref.chores_list}"></span></td>
+        <td><span th:text="${pref.userId}"></span></td>
+        <td><span th:text="${pref.preferenceId}"></span></td>
+        <td><span th:text="${pref.weekNumber}"></span></td>
+        <td><span th:text="${pref.choresList}"></span></td>
 
     </tr>
     </tbody>

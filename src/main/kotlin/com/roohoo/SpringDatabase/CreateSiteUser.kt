@@ -4,7 +4,8 @@ class CreateSiteUser {
     var user_name: String? = null
     var first_name: String? = null
     var last_name: String? = null
-    var kappa_sigma: Int? = null
+    var kappa_sigma: Int? = 0
+    var big: Int? = null
     var brother: Boolean = false
     var password: String? = null
     override fun toString(): String {

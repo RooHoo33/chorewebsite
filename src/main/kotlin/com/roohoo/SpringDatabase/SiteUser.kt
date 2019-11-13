@@ -24,6 +24,9 @@ data class SiteUser(
 
         @get: NotNull
         val kappaSigma: Int = 0,
+
+        @get: NotNull
+        val big: Int = 0,
         @get: NotNull
         val brother: Boolean = false
 

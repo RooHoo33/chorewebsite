@@ -12,6 +12,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher
 import org.springframework.security.crypto.password.PasswordEncoder
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
+
+
 
 
 
@@ -80,6 +83,10 @@ class SecurityConfig: WebSecurityConfigurerAdapter() {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/create-user").permitAll()
+                .antMatchers("/static/css/layout_header.css").permitAll()
+                .antMatchers("/resources/**").permitAll()
+                .antMatchers("/css/*").permitAll()
+                .antMatchers("/**/*.js", "/**/*.css").permitAll()
                 .antMatchers("/**").authenticated()
                 .and()
                 .formLogin()
@@ -111,6 +118,19 @@ class SecurityConfig: WebSecurityConfigurerAdapter() {
 ////        http.exceptionHandling().accessDeniedPage("/403");
 //    }
 
+
+    fun addResourceHandlers(registry: ResourceHandlerRegistry) {
+        registry.addResourceHandler(
+                "/webjars/**",
+                "/img/**",
+                "/css/**",
+                "/js/**")
+                .addResourceLocations(
+                        "classpath:/META-INF/resources/webjars/",
+                        "classpath:/static/img/",
+                        "classpath:/static/css/",
+                        "classpath:/static/js/")
+    }
 
     @Throws(Exception::class)
     public override fun configure(builder: AuthenticationManagerBuilder) {
