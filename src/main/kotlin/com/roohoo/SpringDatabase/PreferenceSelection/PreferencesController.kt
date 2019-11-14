@@ -21,10 +21,11 @@ class PreferencesController(private val preferenceRepository: PreferenceReposito
     @PostMapping("/pref")
     fun addStudent(createPreferenceForm: CreatePreferenceForm, model: Model): String {
 
+
         val userId = createPreferenceForm.user_id!!.toInt()
         logger.debug(createPreferenceForm.toString())
         logger.debug(createPreferenceForm.weekNumber)
-        val preference = Preference(userId = userId, choresList = createPreferenceForm.setChoresList(), weekNumber = createPreferenceForm.weekNumber!!.toInt(), choreYear = createPreferenceForm.year!!.toInt())
+        val preference = Preference(userId = userId, choresList = createPreferenceForm.setChoresList(), weekNumber = createPreferenceForm.weekNumber!!)
 
         logger.debug(createPreferenceForm.weekOverride.toString())
         preferenceRepository.save(preference)
@@ -34,7 +35,14 @@ class PreferencesController(private val preferenceRepository: PreferenceReposito
 
     @GetMapping("pref")
     fun createStudentPage(model: Model): String {
+
+        var auth = false;
+        if (SecurityContextHolder.getContext().authentication != null && SecurityContextHolder.getContext().authentication.isAuthenticated){
+            auth = true;
+        }
         model.addAttribute("preferenceForm", CreatePreferenceForm())
+        model.addAttribute("auth", auth)
+
         return "preferences/new-preferences-form"
     }
 

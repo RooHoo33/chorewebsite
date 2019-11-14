@@ -97,8 +97,16 @@ class ChoreService(private val preferenceRepository: PreferenceRepository, priva
                     }
                 }
             }
-            logger.debug("Monday: " + choreList.getValue("sweepAndMop")["Monday"] + " " + choreList.getValue("dishes")["Monday"])
-            logger.debug("Monday: " + choreList.getValue("sweepAndMop")["Tuesday"] + " " + choreList.getValue("dishes")["Tuesday"])
+//            logger.debug("Monday: " + choreList.getValue("Sweep")["Monday"] + " " + choreList.getValue("dishes")["Monday"])
+//            logger.debug("Monday: " + choreList.getValue("Sweep")["Tuesday"] + " " + choreList.getValue("dishes")["Tuesday"])
+        choreList.forEach{
+            k, v ->
+            v.forEach{
+                kTwo, vTwo ->
+                logger.debug("$k: $kTwo: $vTwo")
+
+            }
+        }
             return choreList
 
         }
@@ -151,10 +159,10 @@ class ChoreService(private val preferenceRepository: PreferenceRepository, priva
 //
 //    }
 
-        fun assembleChoreChartMap() = mutableMapOf("Monday" to "", "Tuesday" to "")
+        fun assembleChoreChartMap() = mutableMapOf("Monday" to "", "Tuesday" to "", "Wednesday" to "", "Thursday" to "", "Friday" to "")
 
 
-        fun assembleEachDaysChoresMap() = mutableMapOf("sweepAndMop" to assembleChoreChartMap(), "dishes" to assembleChoreChartMap())
+        fun assembleEachDaysChoresMap() = mutableMapOf("Sweep" to assembleChoreChartMap(), "Dishes" to assembleChoreChartMap(), "UpperQuad" to assembleChoreChartMap(), "Spykes" to assembleChoreChartMap(), "LargeDishes" to assembleChoreChartMap(), "TablesUp" to assembleChoreChartMap())
     }
 
     data class UserAndPriority(val user: UserAndChores, val priority: Int)

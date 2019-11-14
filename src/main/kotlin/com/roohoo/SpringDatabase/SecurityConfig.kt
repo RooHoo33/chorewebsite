@@ -86,6 +86,7 @@ class SecurityConfig: WebSecurityConfigurerAdapter() {
                 .antMatchers("/static/css/layout_header.css").permitAll()
                 .antMatchers("/resources/**").permitAll()
                 .antMatchers("/css/*").permitAll()
+                .antMatchers("/images/*").permitAll()
                 .antMatchers("/**/*.js", "/**/*.css").permitAll()
                 .antMatchers("/**").authenticated()
                 .and()

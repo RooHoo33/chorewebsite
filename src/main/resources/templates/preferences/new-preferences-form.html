@@ -1,69 +1,160 @@
+
+
+
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head lang="en">
     <title>Spring with Spring Boot, Spring MVC, and Kotlin</title>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Project Oa</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bitter:400,700">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cookie">
+    <link rel="stylesheet" th:href="@{css/style.css}"/>
 </head>
+
 <body>
 
-<h2>Preference </h2>
+<div class="header-container">
+    <div class="header-item header-left">
+        <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
 
-<div>
+        <a href="#login" class="header-link header-logo">Theta Xi</a>
+    </div>
+    <div class="header-item header-center">
+        <a href="#login" class="header-link">AnotherLink</a>
+        <a href="#login" class="header-link link-on">Chore Chart</a>
+    </div>
+    <div class="header-item header-right">
+        <a th:if="${auth}" href="#logout" class="login-button">Sign Out</a>
+        <a th:unless="${auth}" href="#login" class="login-button">Login</a>
+    </div>
 
-    <form th:object="${preferenceForm}" th:action="@{/pref}" method="post">
-        <table>
-            <tr>
-                <th></th>
-                <th>Monday</th>
-                <th>Tuesday</th>
-<!--                <th>Wednesday</th>-->
-                <!--            <th>Thursday</th>-->
-                <!--            <th>Friday</th>-->
-            </tr>
-            <tr>
-                <th>Sweep and Mop</th>
-                <td></td>
-                <td>
-                    <select th:field="*{mondaySweep}">
-                        <option th:each="i : ${#numbers.sequence(0, 4)}" th:value="${i}" th:text="${i}">
-                        </option>
-                    </select>
-                </td>
-                <td>
-                    <select th:field="*{tuesdaySweep}">
-                        <option th:each="i : ${#numbers.sequence(0, 4)}" th:value="${i}" th:text="${i}">
-                        </option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <th>Dishes</th>
-                <td></td>
-                <td>
-                    <select th:field="*{mondayDishes}">
-                        <option th:each="i : ${#numbers.sequence(0, 4)}" th:value="${i}" th:text="${i}">
-                        </option>
-                    </select>
-                </td>
-                <td>
-                    <select th:field="*{tuesdayDishes}">
-                        <option th:each="i : ${#numbers.sequence(0, 4)}" th:value="${i}" th:text="${i}">
-                        </option>
-                    </select>
-                </td>
-            </tr>
-<!--            Chore:<input type="text" th:field="*{chores}"/><br/>-->
-<!--            Day Of Week:<input type="text" th:field="*{dayOfWeek}"/><br/>-->
-
-        </table>
-        UserId:<input type="number" th:field="*{user_id}"/><br/>
-        Is this a override for a week?:<input type="checkbox" th:field="*{weekOverride}"/><br/>
-        Week:<input type="week" th:field="*{weekNumber}"/><br/>
-        Year:<input type="number" th:field="*{year}"/><br/>
-
-        <button type="submit">Submit</button>
-    </form>
 </div>
+<form th:object="${preferenceForm}" th:action="@{/pref}" method="post">
+
+    <div class="chore-chart-container">
+        <div id="chore-corner" class = "chore-chart-item chore">Chore</div>
+        <div class = "chore-chart-item chore-day">Monday</div>
+        <div class = "chore-chart-item chore-day">Tuesday</div>
+        <div class = "chore-chart-item chore-day">Wednesday</div>
+        <div class = "chore-chart-item chore-day">Thursday</div>
+        <div class = "chore-chart-item chore-day">Friday</div>
+
+        <div class = "chore-chart-item chore">Sweep & Mop</div>
+
+        <div class = "chore-chart-item"><select class = "chore-chart-item select-chore" th:field="*{mondaySweep}"><option th:each="i : ${#numbers.sequence(0, 30)}" th:value="${i}" th:text="${i}"></option></select></div>
+        <div class = "chore-chart-item"><select class = "chore-chart-item select-chore" th:field="*{tuesdaySweep}"><option th:each="i : ${#numbers.sequence(0, 30)}" th:value="${i}" th:text="${i}"></option></select></div>
+        <div class = "chore-chart-item"><select class = "chore-chart-item select-chore" th:field="*{wednesdaySweep}"><option th:each="i : ${#numbers.sequence(0, 30)}" th:value="${i}" th:text="${i}"></option></select></div>
+        <div class = "chore-chart-item"><select class = "chore-chart-item select-chore" th:field="*{thursdaySweep}"><option th:each="i : ${#numbers.sequence(0, 30)}" th:value="${i}" th:text="${i}"></option></select></div>
+        <div class = "chore-chart-item"><select class = "chore-chart-item select-chore" th:field="*{fridaySweep}"><option th:each="i : ${#numbers.sequence(0, 30)}" th:value="${i}" th:text="${i}"></option></select></div>
+
+        <div class = "chore-chart-item chore">Dishes</div>
+        <div class = "chore-chart-item"><select class = "chore-chart-item select-chore" th:field="*{mondayDishes}"><option th:each="i : ${#numbers.sequence(0, 30)}" th:value="${i}" th:text="${i}"></option></select></div>
+        <div class = "chore-chart-item"><select class = "chore-chart-item select-chore" th:field="*{tuesdayDishes}"><option th:each="i : ${#numbers.sequence(0, 30)}" th:value="${i}" th:text="${i}"></option></select></div>
+        <div class = "chore-chart-item"><select class = "chore-chart-item select-chore" th:field="*{wednesdayDishes}"><option th:each="i : ${#numbers.sequence(0, 30)}" th:value="${i}" th:text="${i}"></option></select></div>
+        <div class = "chore-chart-item"><select class = "chore-chart-item select-chore" th:field="*{thursdayDishes}"><option th:each="i : ${#numbers.sequence(0, 30)}" th:value="${i}" th:text="${i}"></option></select></div>
+        <div class = "chore-chart-item"><select class = "chore-chart-item select-chore" th:field="*{fridayDishes}"><option th:each="i : ${#numbers.sequence(0, 30)}" th:value="${i}" th:text="${i}"></option></select></div>
+
+        <div class = "chore-chart-item chore">Large Dishes</div>
+        <div class = "chore-chart-item"><select class = "chore-chart-item select-chore" th:field="*{mondayLargeDishes}"><option th:each="i : ${#numbers.sequence(0, 30)}" th:value="${i}" th:text="${i}"></option></select></div>
+        <div class = "chore-chart-item"><select class = "chore-chart-item select-chore" th:field="*{tuesdayLargeDishes}"><option th:each="i : ${#numbers.sequence(0, 30)}" th:value="${i}" th:text="${i}"></option></select></div>
+        <div class = "chore-chart-item"><select class = "chore-chart-item select-chore" th:field="*{wednesdayLargeDishes}"><option th:each="i : ${#numbers.sequence(0, 30)}" th:value="${i}" th:text="${i}"></option></select></div>
+        <div class = "chore-chart-item"><select class = "chore-chart-item select-chore" th:field="*{thursdayLargeDishes}"><option th:each="i : ${#numbers.sequence(0, 30)}" th:value="${i}" th:text="${i}"></option></select></div>
+        <div class = "chore-chart-item"><select class = "chore-chart-item select-chore" th:field="*{fridayLargeDishes}"><option th:each="i : ${#numbers.sequence(0, 30)}" th:value="${i}" th:text="${i}"></option></select></div>
+
+        <div class = "chore-chart-item chore">Upper Quad</div>
+        <div class = "chore-chart-item"><select class = "chore-chart-item select-chore" th:field="*{mondayUpperQuad}"><option th:each="i : ${#numbers.sequence(0, 30)}" th:value="${i}" th:text="${i}"></option></select></div>
+        <div class = "chore-chart-item"><select class = "chore-chart-item select-chore" th:field="*{tuesdayUpperQuad}"><option th:each="i : ${#numbers.sequence(0, 30)}" th:value="${i}" th:text="${i}"></option></select></div>
+        <div class = "chore-chart-item"><select class = "chore-chart-item select-chore" th:field="*{wednesdayUpperQuad}"><option th:each="i : ${#numbers.sequence(0, 30)}" th:value="${i}" th:text="${i}"></option></select></div>
+        <div class = "chore-chart-item"><select class = "chore-chart-item select-chore" th:field="*{thursdayUpperQuad}"><option th:each="i : ${#numbers.sequence(0, 30)}" th:value="${i}" th:text="${i}"></option></select></div>
+        <div class = "chore-chart-item"><select class = "chore-chart-item select-chore" th:field="*{fridayUpperQuad}"><option th:each="i : ${#numbers.sequence(0, 30)}" th:value="${i}" th:text="${i}"></option></select></div>
+
+        <div class = "chore-chart-item chore">Spykes</div>
+        <div class = "chore-chart-item"><select class = "chore-chart-item select-chore" th:field="*{mondaySpykes}"><option th:each="i : ${#numbers.sequence(0, 30)}" th:value="${i}" th:text="${i}"></option></select></div>
+        <div class = "chore-chart-item"><select class = "chore-chart-item select-chore" th:field="*{tuesdaySpykes}"><option th:each="i : ${#numbers.sequence(0, 30)}" th:value="${i}" th:text="${i}"></option></select></div>
+        <div class = "chore-chart-item"><select class = "chore-chart-item select-chore" th:field="*{wednesdaySpykes}"><option th:each="i : ${#numbers.sequence(0, 30)}" th:value="${i}" th:text="${i}"></option></select></div>
+        <div class = "chore-chart-item"><select class = "chore-chart-item select-chore" th:field="*{thursdaySpykes}"><option th:each="i : ${#numbers.sequence(0, 30)}" th:value="${i}" th:text="${i}"></option></select></div>
+        <div class = "chore-chart-item"><select class = "chore-chart-item select-chore" th:field="*{fridaySpykes}"><option th:each="i : ${#numbers.sequence(0, 30)}" th:value="${i}" th:text="${i}"></option></select></div>
+
+        <div class = "chore-chart-item chore">Tables & Chairs</div>
+        <div class = "chore-chart-item"><select class = "chore-chart-item select-chore" th:field="*{mondayTablesUp}"><option th:each="i : ${#numbers.sequence(0, 30)}" th:value="${i}" th:text="${i}"></option></select></div>
+        <div class = "chore-chart-item"><select class = "chore-chart-item select-chore" th:field="*{tuesdayTablesUp}"><option th:each="i : ${#numbers.sequence(0, 30)}" th:value="${i}" th:text="${i}"></option></select></div>
+        <div class = "chore-chart-item"><select class = "chore-chart-item select-chore" th:field="*{wednesdayTablesUp}"><option th:each="i : ${#numbers.sequence(0, 30)}" th:value="${i}" th:text="${i}"></option></select></div>
+        <div class = "chore-chart-item"><select class = "chore-chart-item select-chore" th:field="*{thursdayTablesUp}"><option th:each="i : ${#numbers.sequence(0, 30)}" th:value="${i}" th:text="${i}"></option></select></div>
+        <div class = "chore-chart-item"><select class = "chore-chart-item select-chore" th:field="*{fridayTablesUp}"><option th:each="i : ${#numbers.sequence(0, 30)}" th:value="${i}" th:text="${i}"></option></select></div>
+    </div>
+<div id="meta-info-section">
+        UserId:<input class = "meta" type="number" th:field="*{user_id}"/><br/>
+        Is this a override for a week?:<input class = "meta" type="checkbox" th:field="*{weekOverride}"/><br/>
+        <input class = "meta meta-week" type="week" th:field="*{weekNumber}"/><br/>
+
+        <button class = "meta" type="submit">Submit</button>
+    </div>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+</form>
+
+
+<!--<div>-->
+
+<!--    <form th:object="${preferenceForm}" th:action="@{/pref}" method="post">-->
+<!--        <table>-->
+<!--            <tr>-->
+<!--                <th></th>-->
+<!--                <th>Monday</th>-->
+<!--                <th>Tuesday</th>-->
+<!--&lt;!&ndash;                <th>Wednesday</th>&ndash;&gt;-->
+<!--                &lt;!&ndash;            <th>Thursday</th>&ndash;&gt;-->
+<!--                &lt;!&ndash;            <th>Friday</th>&ndash;&gt;-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <th>Sweep and Mop</th>-->
+<!--                <td></td>-->
+<!--                <td>-->
+<!--                    <select th:field="*{mondaySweep}">-->
+<!--                        <option th:each="i : ${#numbers.sequence(0, 4)}" th:value="${i}" th:text="${i}">-->
+<!--                        </option>-->
+<!--                    </select>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <select th:field="*{tuesdaySweep}">-->
+<!--                        <option th:each="i : ${#numbers.sequence(0, 4)}" th:value="${i}" th:text="${i}">-->
+<!--                        </option>-->
+<!--                    </select>-->
+<!--                </td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <th>Dishes</th>-->
+<!--                <td></td>-->
+<!--                <td>-->
+<!--                    <select th:field="*{mondayDishes}">-->
+<!--                        <option th:each="i : ${#numbers.sequence(0, 4)}" th:value="${i}" th:text="${i}">-->
+<!--                        </option>-->
+<!--                    </select>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <select th:field="*{tuesdayDishes}">-->
+<!--                        <option th:each="i : ${#numbers.sequence(0, 4)}" th:value="${i}" th:text="${i}">-->
+<!--                        </option>-->
+<!--                    </select>-->
+<!--                </td>-->
+<!--            </tr>-->
+<!--&lt;!&ndash;            Chore:<input type="text" th:field="*{chores}"/><br/>&ndash;&gt;-->
+<!--&lt;!&ndash;            Day Of Week:<input type="text" th:field="*{dayOfWeek}"/><br/>&ndash;&gt;-->
+
+<!--        </table>-->
+<!--        UserId:<input type="number" th:field="*{user_id}"/><br/>-->
+<!--        Is this a override for a week?:<input type="checkbox" th:field="*{weekOverride}"/><br/>-->
+<!--        Week:<input type="week" th:field="*{weekNumber}"/><br/>-->
+
+<!--        <button type="submit">Submit</button>-->
+<!--    </form>-->
+<!--</div>-->
 
 </body>
 </html>
