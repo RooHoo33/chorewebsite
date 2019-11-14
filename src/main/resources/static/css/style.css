@@ -94,8 +94,8 @@ a.login-button:hover {
 }
 
 .chore-chart-item {
-    padding-top: 10%;
-    font-size: 2.5vw;
+    /*padding-top: 10%;*/
+    font-size: 1.75vw;
     vertical-align: middle;
     color: #ffaf5f;
 }
@@ -108,6 +108,12 @@ a.login-button:hover {
 
 .chore-day {
     border-bottom: solid;
+    padding-bottom: 10px;
+}
+.chore-day, .chore{
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 10px;
     padding-bottom: 10px;
 }
 

@@ -3,6 +3,7 @@
 <head lang="en">
     <meta charset="UTF-8" />
     <title>Chore Chart</title>
+    <link rel="stylesheet" th:href="@{css/style.css}"/>
 </head>
 <style>
 
@@ -29,22 +30,76 @@
 </style>
 
 <body>
-<table>
-    <thead>
-    <tr>
-        <th></th>
-        <th> Monday </th>
-        <th> Tuesday </th>
-    </tr>
-    </thead>
-    <tbody>
 
-    <tr th:each="chore : ${choreChartList}">
-        <th><span th:text="${chore.key}"></span></th>
-        <td><span th:text="${chore.value.get('Monday')}"></span></td>
-        <td><span th:text="${chore.value.get('Tuesday')}"></span></td>
-    </tr>
-    </tbody>
-</table>
+<div class="header-container">
+    <div class="header-item header-left">
+        <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+
+        <a href="#login" class="header-link header-logo">Theta Xi</a>
+    </div>
+    <div class="header-item header-center">
+        <a href="#login" class="header-link">AnotherLink</a>
+        <a href="#login" class="header-link link-on">Chore Chart</a>
+    </div>
+    <div class="header-item header-right">
+
+        <a href="#login" class="login-button">loginsign</a>
+    </div>
+
+</div>
+
+<div class="chore-chart-container">
+    <p id="chore-corner" class = "chore-chart-item chore">Chore</p>
+    <p class = "chore-chart-item chore-day">Monday</p>
+    <p class = "chore-chart-item chore-day">Tuesday</p>
+    <p class = "chore-chart-item chore-day">Wednesday</p>
+    <p class = "chore-chart-item chore-day">Thursday</p>
+    <p class = "chore-chart-item chore-day">Friday</p>
+
+    <th:block th:each="chore : ${choreChartList}">
+        <p class="chore-chart-item chore" th:text="${chore.key}"></p>
+        <p class="chore-chart-item" th:text="${chore.value.get('Monday')}"></p>
+        <p class="chore-chart-item" th:text="${chore.value.get('Tuesday')}"></p>
+        <p class="chore-chart-item" th:text="${chore.value.get('Wednesday')}"></p>
+        <p class="chore-chart-item" th:text="${chore.value.get('Thursday')}"></p>
+        <p class="chore-chart-item" th:text="${chore.value.get('Friday')}"></p>
+
+    </th:block>
+<!--    <div class = "chore-chart-item">1</div>-->
+<!--    <div class = "chore-chart-item">2211</div>-->
+<!--    <div class = "chore-chart-item">3</div>-->
+<!--    <div class = "chore-chart-item">4</div>-->
+<!--    <div class = "chore-chart-item">5</div>-->
+<!--    <div class = "chore-chart-item chore">Dishes</div>-->
+<!--    <div class = "chore-chart-item">6</div>-->
+<!--    <div class = "chore-chart-item">7</div>-->
+<!--    <div class = "chore-chart-item">8</div>-->
+<!--    <div class = "chore-chart-item">9</div>-->
+<!--    <div class = "chore-chart-item">10</div>-->
+<!--    <div class = "chore-chart-item chore">Upper Quad</div>-->
+<!--    <div class = "chore-chart-item">11</div>-->
+<!--    <div class = "chore-chart-item">12</div>-->
+<!--    <div class = "chore-chart-item">13</div>-->
+<!--    <div class = "chore-chart-item">14</div>-->
+<!--    <div class = "chore-chart-item">15</div>-->
+<!--    <div class = "chore-chart-item chore">Spykes</div>-->
+<!--    <div class = "chore-chart-item">16</div>-->
+<!--    <div class = "chore-chart-item">17</div>-->
+<!--    <div class = "chore-chart-item">18</div>-->
+<!--    <div class = "chore-chart-item">19</div>-->
+<!--    <div class = "chore-chart-item">20</div>-->
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
 </body>
 </html>
