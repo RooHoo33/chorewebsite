@@ -3,12 +3,19 @@ package com.roohoo.SpringDatabase
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+import org.springframework.web.servlet.ModelAndView
+import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.RequestMethod
+import org.springframework.web.bind.annotation.RequestMapping
+
+
 
 
 
@@ -22,10 +29,10 @@ class UserController(private val userRepository: UserRepository) {
     val logger = LoggerFactory.getLogger(UserController::class.java)!!
 
 
-    @RequestMapping("/login")
-    fun login(model:Model): String{
-        return "login.html"
-    }
+//    @RequestMapping("/login")
+//    fun login(model:Model): String{
+//        return "login.html"
+//    }
 
     @RequestMapping("/")
     fun home(model:Model): String{
@@ -41,6 +48,25 @@ class UserController(private val userRepository: UserRepository) {
     }
 
 
+    @GetMapping("/login")
+    fun login(
+            @RequestParam(value = "error", required = false) error: String?,
+            @RequestParam(value = "logout", required = false) logout: String?, model:Model): String {
+
+        if (error != null) {
+            model.addAttribute("error", "Invalid username and password!")
+        }
+
+        if (logout != null) {
+
+            model.addAttribute("msg", "You've been logged out successfully.")
+        }
+
+
+        return "login";
+
+    }
+
     @GetMapping("/users")
     fun getAllJUsers(model: Model): String {
 
@@ -50,6 +76,21 @@ class UserController(private val userRepository: UserRepository) {
         model.addAttribute("users", users)
 
         return "site-users/index"
+    }
+
+    @RequestMapping("/home")
+    fun getHome(model: Model): String {
+        var auth = false
+        if (SecurityContextHolder.getContext().authentication != null && SecurityContextHolder.getContext().authentication.isAuthenticated){
+            auth = true;
+        }
+        model.addAttribute("auth", auth)
+
+        val users = userRepository.findAll()
+
+        model.addAttribute("users", users)
+
+        return "main-page"
     }
 
     @PostMapping("/create-user")

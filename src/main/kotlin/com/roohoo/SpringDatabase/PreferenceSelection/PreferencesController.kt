@@ -12,7 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails
 
 
 @Controller
-class PreferencesController(private val preferenceRepository: PreferenceRepository, private val userRepository: UserRepository, val logger: Logger, private val committeeRepository: CommitteeRepository) {
+class PreferencesController(private val preferenceRepository: PreferenceRepository, private val userRepository: UserRepository, val logger: Logger, private val committeeRepository: CommitteeRepository, private val choreChartModelRepository: ChoreChartModelRepository) {
 
 //    @Autowired
 //    private val logger: Logger? = null
@@ -70,15 +70,22 @@ class PreferencesController(private val preferenceRepository: PreferenceReposito
 
     @PostMapping("/chorechart")
     fun createChoreChart(choreChartType: ChoreChartType, model: Model): String {
-        var test = ChoreService(preferenceRepository, userRepository, committeeRepository, logger)
+        var auth = false;
+        if (SecurityContextHolder.getContext().authentication != null && SecurityContextHolder.getContext().authentication.isAuthenticated){
+            auth = true;
+        }
+        model.addAttribute("auth", auth)
+        var test = ChoreService(preferenceRepository, userRepository, committeeRepository, logger,choreChartModelRepository)
 //        val choreChartList = choreChartMap.values
-        model.addAttribute("choreChartList", test.getAllUsersAndTheirPreferences(choreChartType.type))
+        model.addAttribute("choreChartList", test.getAllUsersAndTheirPreferences(choreChartType.type, choreChartType.week))
+
+
         return "preferences/chorechart"
     }
 
     @GetMapping("/chorechart")
     fun getChoreChart(model: Model): String {
-        var test = ChoreService(preferenceRepository, userRepository, committeeRepository, logger)
+        var test = ChoreService(preferenceRepository, userRepository, committeeRepository, logger, choreChartModelRepository)
 //        val choreChartList = choreChartMap.values
         model.addAttribute("choreChartType", ChoreChartType())
         return "preferences/select-chore-chart-type"

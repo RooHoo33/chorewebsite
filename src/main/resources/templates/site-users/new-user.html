@@ -16,71 +16,84 @@
     <!--                font-family: Helvetica, Arial, sans-serif;-->
     <!--            }-->
 
-<!--                -->
+    <!--                -->
 
-<!--                .note {-->
-<!--                    line-height: 0%;-->
-<!--                    /*content: 1px;*/-->
-<!--                    color: gray;-->
-<!--                    font-size: 15px;-->
-<!--                }-->
+    <!--                .note {-->
+    <!--                    line-height: 0%;-->
+    <!--                    /*content: 1px;*/-->
+    <!--                    color: gray;-->
+    <!--                    font-size: 15px;-->
+    <!--                }-->
 
-<!--                input[type=text]:focus {-->
-<!--                    width: 300px;-->
+    <!--                input[type=text]:focus {-->
+    <!--                    width: 300px;-->
 
-<!--                }-->
+    <!--                }-->
 
-<!--                button {-->
-<!--                    background-color: #44c767;-->
-<!--                    border-radius: 28px;-->
-<!--                    border: 1px solid #18ab29;-->
-<!--                    display: inline-block;-->
-<!--                    cursor: pointer;-->
-<!--                    color: #ffffff;-->
-<!--                    font-size: 17px;-->
-<!--                    padding: 16px 31px;-->
-<!--                    text-decoration: none;-->
-<!--                    text-shadow: 0px 1px 0px #2f6627;-->
-<!--                    margin: 30px;-->
-<!--                }-->
+    <!--                button {-->
+    <!--                    background-color: #44c767;-->
+    <!--                    border-radius: 28px;-->
+    <!--                    border: 1px solid #18ab29;-->
+    <!--                    display: inline-block;-->
+    <!--                    cursor: pointer;-->
+    <!--                    color: #ffffff;-->
+    <!--                    font-size: 17px;-->
+    <!--                    padding: 16px 31px;-->
+    <!--                    text-decoration: none;-->
+    <!--                    text-shadow: 0px 1px 0px #2f6627;-->
+    <!--                    margin: 30px;-->
+    <!--                }-->
 
-<!--                button:hover {-->
-<!--                    background-color: #60d17c;-->
-<!--                }-->
+    <!--                button:hover {-->
+    <!--                    background-color: #60d17c;-->
+    <!--                }-->
 
-<!--                button:active {-->
-<!--                    position: relative;-->
-<!--                    top: 1px;-->
-<!--                }-->
+    <!--                button:active {-->
+    <!--                    position: relative;-->
+    <!--                    top: 1px;-->
+    <!--                }-->
 
 
     <!--        </style>-->
-    <link rel="stylesheet" th:href="@{css/layout_header.css}"/>
-    <link rel="stylesheet" th:href="@{css/form.css}"/>
+    <!--    <link rel="stylesheet" th:href="@{css/layout_header.css}"/>-->
+    <!--    <link rel="stylesheet" th:href="@{css/form.css}"/>-->
+    <link rel="stylesheet" th:href="@{css/style.css}"/>
 
 </head>
 <body>
 
+<!--<div class="header-container">-->
+<!--    <div class="header-item header-left">-->
+<!--        <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">-->
+
+<!--        <a href="#login" class="header-link header-logo">Theta Xi</a>-->
+<!--    </div>-->
+<!--    <div class="header-item header-center">-->
+<!--        <a href="#login" class="header-link">AnotherLink</a>-->
+<!--        <a href="#login" class="header-link">Chore Chart</a>-->
+<!--    </div>-->
+<!--    <div class="header-item header-right">-->
+
+<!--        <a th:if="${auth}" th:href="@{/logout}" class="login-button">Sign Out</a>-->
+<!--        <a th:unless="${auth}" th:href="@{/logout}" class="login-button">Login</a>-->
+
+<!--</div>-->
+
+
 <div th:replace="fragments/header :: header"></div>
 <div class="user-form">
-<form th:object="${siteUser}" th:action="@{/create-user}" method="post">
-    <h1 class="user-form">Login</h1>
+    <div id="meta-info-section">
+        <form th:object="${siteUser}" th:action="@{/create-user}" method="post">
+            <h1>Login</h1>
 
-    <h3>First Name</h3>
-    <input type="text" th:field="*{first_name}"><br>
-    <h3>Last Name</h3>
-    <input type="text" th:field="*{last_name}"><br>
-    <h3>Kappa Simga</h3>
-    <h4 class="note user-form">Leave zero if Associate Member</h4>
-    <input type="number" th:field="*{kappa_sigma}"><br>
-    <h3>Big</h3>
-    <input type="number" th:field="*{big}"><br>
-    <h3>User Name</h3>
-    <input type="text" th:field="*{user_name}"><br>
-    <h3>Password</h3>
-    <input type="password" th:field="*{password}"><br>
-    <button type="submit">Submit</button>
-</form>
-</div>
+            First Name<input class="meta" type="text" th:field="*{first_name}"><br>
+            Last Name<input class="meta" type="text" th:field="*{last_name}"><br>
+            Kappa Simga- Leave zero if Associate Member<input class="meta" type="number" th:field="*{kappa_sigma}"><br>
+            Big<input class="meta" type="number" th:field="*{big}"><br>
+            User Name<input class="meta" type="text" th:field="*{user_name}"><br>
+            Password<input class="meta" type="password" th:field="*{password}"><br>
+            <button class="meta" type="submit">Submit</button>
+        </form>
+    </div>
 </body>
 </html>

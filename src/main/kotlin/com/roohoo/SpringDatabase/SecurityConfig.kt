@@ -92,8 +92,10 @@ class SecurityConfig: WebSecurityConfigurerAdapter() {
                 .and()
                 .formLogin()
                 .loginPage("/login")
+                .defaultSuccessUrl("/home")
                 .permitAll()
-                .and().sessionManagement().disable()
+                .and()
+                .sessionManagement().disable()
                 .logout()
                 .logoutRequestMatcher(AntPathRequestMatcher("/logout"));
 

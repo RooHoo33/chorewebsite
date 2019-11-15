@@ -4,10 +4,10 @@ import com.roohoo.SpringDatabase.Committee.CommitteeRepository
 import com.roohoo.SpringDatabase.UserRepository
 import org.slf4j.Logger
 
-class ChoreService(private val preferenceRepository: PreferenceRepository, private val userRepository: UserRepository, private val committeeRepository: CommitteeRepository, val logger: Logger) {
+class ChoreService(private val preferenceRepository: PreferenceRepository, private val userRepository: UserRepository, private val committeeRepository: CommitteeRepository, val logger: Logger, private val choreChartModelRepository: ChoreChartModelRepository) {
 
 
-    private fun createChoreChart(userAndChoresList: MutableList<UserAndPriority>, sortType: String): MutableMap<String, MutableMap<String, String>> {
+    private fun createChoreChart(userAndChoresList: MutableList<UserAndPriority>, sortType: String, week:String): MutableMap<String, MutableMap<String, String>> {
 
         val choreList = assembleEachDaysChoresMap()
         val maintenanceCommittee = committeeRepository.findByCommitteeName("maintenance")
@@ -19,7 +19,7 @@ class ChoreService(private val preferenceRepository: PreferenceRepository, priva
             }
 
             for (chore in it.user.chores) {
-                if (choreList.getValue(chore.choreString)[chore.day] == "") {
+                if (choreList.getValue(chore.choreString)[chore.day] == "XXX") {
                     if (it.user.siteUser.brother) {
                         choreList.getValue(chore.choreString)[chore.day] = it.user.siteUser.kappaSigma.toString()
                     } else {
@@ -33,12 +33,15 @@ class ChoreService(private val preferenceRepository: PreferenceRepository, priva
         logger.debug("first: $choreList.toString()")
 
         userAndChoresList.filter { it -> !it.user.siteUser.brother && maintenanceCommittee.any { mait -> mait.userId == it.user.siteUser.userId } }.sortedBy { onlyAms -> onlyAms.user.siteUser.big }.forEach {
+            it.user.chores.retainAll{goodChore ->
+                goodChore.priority != 0
+            }
             it.user.chores.sortBy { chores ->
                 chores.priority
             }
 
             for (chore in it.user.chores) {
-                if (choreList.getValue(chore.choreString)[chore.day] == "") {
+                if (choreList.getValue(chore.choreString)[chore.day] == "XXX") {
                     if (it.user.siteUser.brother) {
                         choreList.getValue(chore.choreString)[chore.day] = it.user.siteUser.kappaSigma.toString()
                     } else {
@@ -58,12 +61,15 @@ class ChoreService(private val preferenceRepository: PreferenceRepository, priva
         }
 
         userAndChoresList.filter { it -> maintenanceCommittee.any { mait -> mait.userId != it.user.siteUser.userId } }.forEach {
+            it.user.chores.retainAll{goodChore ->
+                goodChore.priority != 0
+            }
             it.user.chores.sortBy { chores ->
                 chores.priority
             }
 
             for (chore in it.user.chores) {
-                if (choreList.getValue(chore.choreString)[chore.day] == "") {
+                if (choreList.getValue(chore.choreString)[chore.day] == "XXX") {
                     if (it.user.siteUser.brother) {
                         choreList.getValue(chore.choreString)[chore.day] = it.user.siteUser.kappaSigma.toString()
                     } else {
@@ -80,11 +86,14 @@ class ChoreService(private val preferenceRepository: PreferenceRepository, priva
             while (stillPicking) {
                 userAndChoresList.forEach {
                     stillPicking = false
+                    it.user.chores.retainAll{goodChore ->
+                        goodChore.priority != 0
+                    }
                     it.user.chores.sortBy { chores ->
                         chores.priority
                     }
                     for (chore in it.user.chores) {
-                        if (choreList.getValue(chore.choreString)[chore.day] == "") {
+                        if (choreList.getValue(chore.choreString)[chore.day] == "XXX") {
                             if (it.user.siteUser.brother) {
                                 choreList.getValue(chore.choreString)[chore.day] = it.user.siteUser.kappaSigma.toString()
                             } else {
@@ -99,19 +108,55 @@ class ChoreService(private val preferenceRepository: PreferenceRepository, priva
             }
 //            logger.debug("Monday: " + choreList.getValue("Sweep")["Monday"] + " " + choreList.getValue("dishes")["Monday"])
 //            logger.debug("Monday: " + choreList.getValue("Sweep")["Tuesday"] + " " + choreList.getValue("dishes")["Tuesday"])
+        val list = mutableListOf<String>()
         choreList.forEach{
             k, v ->
             v.forEach{
                 kTwo, vTwo ->
                 logger.debug("$k: $kTwo: $vTwo")
+                list.add(vTwo.toString())
 
             }
         }
+        var i = 0
+        val choreChartModel = ChoreChartModel(week_and_year = week,
+                sweepMonday =list[i++],
+                sweepTuesday =list[i++],
+                sweepWednesday =list[i++],
+                sweepThursday =list[i++],
+                sweepFriday =list[i++],
+                dishesMonday =list[i++],
+                dishesTuesday =list[i++],
+                dishesWednesday =list[i++],
+                dishesThursday =list[i++],
+                dishesFriday =list[i++],
+                upperQuadMonday =list[i++],
+                upperQuadTuesday =list[i++],
+                upperQuadWednesday =list[i++],
+                upperQuadThursday =list[i++],
+                upperQuadFriday =list[i++],
+                spykesMonday =list[i++],
+                spykesTuesday =list[i++],
+                spykesWednesday =list[i++],
+                spykesThursday =list[i++],
+                spykesFriday =list[i++],
+                largeDishesMonday =list[i++],
+                largeDishesTuesday =list[i++],
+                largeDishesWednesday =list[i++],
+                largeDishesThursday =list[i++],
+                largeDishesFriday =list[i++],
+                tablesUpMonday =list[i++],
+                tablesUpTuesday =list[i++],
+                tablesUpWednesday =list[i++],
+                tablesUpThursday =list[i++],
+                tablesUpFriday = list[i])
+        choreChartModelRepository.save(choreChartModel)
+
             return choreList
 
         }
 
-        fun getAllUsersAndTheirPreferences(sortType: String): MutableMap<String, MutableMap<String, String>> {
+        fun getAllUsersAndTheirPreferences(sortType: String, week: String): MutableMap<String, MutableMap<String, String>> {
             val users = userRepository.findAll()
             val usersAndPreferences = mutableListOf<UserAndChores>()
             users.forEach {
@@ -127,7 +172,7 @@ class ChoreService(private val preferenceRepository: PreferenceRepository, priva
             }
 
             val usersAndPriority = getUserPriority(usersAndPreferences)
-            return createChoreChart(usersAndPriority, sortType)
+            return createChoreChart(usersAndPriority, sortType, week)
         }
 
         fun getUserPriority(userAndChoresList: MutableList<UserAndChores>): MutableList<UserAndPriority> {
@@ -159,11 +204,12 @@ class ChoreService(private val preferenceRepository: PreferenceRepository, priva
 //
 //    }
 
-        fun assembleChoreChartMap() = mutableMapOf("Monday" to "", "Tuesday" to "", "Wednesday" to "", "Thursday" to "", "Friday" to "")
+        fun assembleChoreChartMap() = mutableMapOf("Monday" to "XXX", "Tuesday" to "XXX", "Wednesday" to "XXX", "Thursday" to "XXX", "Friday" to "XXX")
 
 
         fun assembleEachDaysChoresMap() = mutableMapOf("Sweep" to assembleChoreChartMap(), "Dishes" to assembleChoreChartMap(), "UpperQuad" to assembleChoreChartMap(), "Spykes" to assembleChoreChartMap(), "LargeDishes" to assembleChoreChartMap(), "TablesUp" to assembleChoreChartMap())
     }
 
     data class UserAndPriority(val user: UserAndChores, val priority: Int)
+
 

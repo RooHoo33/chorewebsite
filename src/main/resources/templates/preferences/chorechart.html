@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <title>Chore Chart</title>
     <link rel="stylesheet" th:href="@{css/style.css}"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
 </head>
 <style>
 
@@ -31,22 +33,7 @@
 
 <body>
 
-<div class="header-container">
-    <div class="header-item header-left">
-        <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
-
-        <a href="#login" class="header-link header-logo">Theta Xi</a>
-    </div>
-    <div class="header-item header-center">
-        <a href="#login" class="header-link">AnotherLink</a>
-        <a href="#login" class="header-link link-on">Chore Chart</a>
-    </div>
-    <div class="header-item header-right">
-
-        <a href="#login" class="login-button">loginsign</a>
-    </div>
-
-</div>
+<div th:replace="fragments/header :: header"></div>
 
 <div class="chore-chart-container">
     <p id="chore-corner" class = "chore-chart-item chore">Chore</p>
@@ -65,6 +52,11 @@
         <p class="chore-chart-item" th:text="${chore.value.get('Friday')}"></p>
 
     </th:block>
+
+    <script>
+        $( "p:contains('XXX')" ).css( "color", "red" );
+
+    </script>
 <!--    <div class = "chore-chart-item">1</div>-->
 <!--    <div class = "chore-chart-item">2211</div>-->
 <!--    <div class = "chore-chart-item">3</div>-->

@@ -19,22 +19,7 @@
 
 <body>
 
-<div class="header-container">
-    <div class="header-item header-left">
-        <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
-
-        <a href="#login" class="header-link header-logo">Theta Xi</a>
-    </div>
-    <div class="header-item header-center">
-        <a href="#login" class="header-link">AnotherLink</a>
-        <a href="#login" class="header-link link-on">Chore Chart</a>
-    </div>
-    <div class="header-item header-right">
-        <a th:if="${auth}" href="#logout" class="login-button">Sign Out</a>
-        <a th:unless="${auth}" href="#login" class="login-button">Login</a>
-    </div>
-
-</div>
+<div th:replace="fragments/header :: header"></div>
 <form th:object="${preferenceForm}" th:action="@{/pref}" method="post">
 
     <div class="chore-chart-container">
