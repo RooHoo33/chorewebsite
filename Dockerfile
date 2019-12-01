@@ -7,6 +7,7 @@ CMD cd app
 CMD chmod +x gradlew
 CMD ./gradlew build
 COPY . .
+CMD chmod +x gradlew
 RUN ./gradlew build
 
 FROM roohoo/arm-openjdk:1.0
