@@ -4,23 +4,17 @@ metadata:
   name: mysql
   labels:
     app: mysql
-    version: "1.0"
-    environment: testing
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: mysql
-      version: "1.0"
-      environment: testing
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
         app: mysql
-        version: "1.0"
-        environment: testing
     spec:
       containers:
         - image: hypriot/rpi-mysql:arm-5.5
