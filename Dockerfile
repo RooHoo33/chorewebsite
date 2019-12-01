@@ -5,6 +5,8 @@ CMD pwd
 CMD cd app
 CMD pwd
 CMD ./gradlew build
+COPY . .
+RUN ./gradlew build
 
 FROM roohoo/arm-openjdk:1.0
 USER root
