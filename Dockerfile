@@ -2,9 +2,9 @@ FROM roohoo/arm-openjdk:1.0 AS build
 USER root
 CMD mkdir app
 COPY * app/
-CMD pwd
+
 CMD cd app
-CMD pwd
+CMD chmod +x gradlew
 CMD ./gradlew build
 COPY . .
 RUN ./gradlew build
