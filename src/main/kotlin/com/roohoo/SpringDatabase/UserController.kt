@@ -67,16 +67,16 @@ class UserController(private val userRepository: UserRepository) {
 
     }
 
-    @GetMapping("/users")
-    fun getAllJUsers(model: Model): String {
-
-
-        val users = userRepository.findAll()
-
-        model.addAttribute("users", users)
-
-        return "site-users/index"
-    }
+//    @GetMapping("/users")
+//    fun getAllJUsers(model: Model): String {
+//
+//
+//        val users = userRepository.findAll()
+//
+//        model.addAttribute("users", users)
+//
+//        return "site-users/index"
+//    }
 
     @RequestMapping("/home")
     fun getHome(model: Model): String {
