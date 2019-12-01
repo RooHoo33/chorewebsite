@@ -3,6 +3,7 @@ CMD mkdir app
 COPY * app/
 CMD ls
 CMD cd app
+CMD ls
 CMD ./gradlew build
 
 FROM roohoo/arm-openjdk:1.0
