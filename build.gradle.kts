@@ -22,7 +22,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	{
-		exclude("spring-boot-starter-tomcat")
+		exclude(group = "org.springframework.boot", module = "spring-boot-starter-tomcat")
 	}
 	implementation("org.springframework.boot:spring-boot-starter-jetty")
 	implementation("org.springframework.boot:spring-boot-starter-security")
