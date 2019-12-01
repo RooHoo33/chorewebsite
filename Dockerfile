@@ -1,3 +1,5 @@
+FROM roohoo/arm-openjdk:1.0
+
 CMD ./gradlew build
 
 FROM roohoo/arm-openjdk:1.0
