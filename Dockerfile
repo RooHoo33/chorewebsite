@@ -1,6 +1,6 @@
 FROM roohoo/arm-openjdk:1.0 AS build
-CMD mkdir /app
-COPY /* /app
+CMD mkdir app
+COPY * app/
 CMD ls
 CMD cd app
 CMD ./gradlew build
