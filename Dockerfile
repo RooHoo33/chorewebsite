@@ -8,7 +8,8 @@
 #COPY . .
 #RUN ./gradlew build
 
-FROM roohoo/arm-openjdk:1.0
+#FROM roohoo/arm-openjdk:1.0
+FROM hypriot/rpi-java
 USER root
 
 COPY build/libs/*.jar .
