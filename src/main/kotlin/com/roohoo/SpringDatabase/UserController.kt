@@ -86,9 +86,9 @@ class UserController(private val userRepository: UserRepository) {
         }
         model.addAttribute("auth", auth)
 
-        val users = userRepository.findAll()
-
-        model.addAttribute("users", users)
+//        val users = userRepository.findAll()
+//
+//        model.addAttribute("users", users)
 
         return "main-page"
     }
