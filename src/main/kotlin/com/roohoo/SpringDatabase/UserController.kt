@@ -81,11 +81,12 @@ class UserController(private val userRepository: UserRepository) {
     @RequestMapping("/home")
     fun getHome(model: Model): String {
         var auth = false
+        logger.warn("before security check")
         if (SecurityContextHolder.getContext().authentication != null && SecurityContextHolder.getContext().authentication.isAuthenticated){
             auth = true;
         }
         model.addAttribute("auth", auth)
-
+        logger.warn("after secuirty check")
 //        val users = userRepository.findAll()
 //
 //        model.addAttribute("users", users)
