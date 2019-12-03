@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: pi-spring-boot
-          image: roohoo/chorewebsite:1.7
+          image: roohoo/chorewebsite:1.8
           ports:
             - containerPort: 8080
           resources:
