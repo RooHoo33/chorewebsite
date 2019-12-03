@@ -9,7 +9,8 @@
 #RUN ./gradlew build
 
 #FROM roohoo/arm-openjdk:1.0
-FROM hypriot/rpi-java:jre-1.8.111
+#FROM hypriot/rpi-java:jre-1.8.111
+FROM bellsoft/liberica-openjdk-alpine:11
 USER root
 
 COPY build/libs/*.jar .
